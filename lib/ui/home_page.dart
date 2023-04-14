@@ -1,9 +1,7 @@
 import 'package:contact_list/helpers/contact_helper.dart';
 import 'package:flutter/material.dart';
-import 'dart:io';
 
 import '../cards/contact_card.dart';
-import 'contact_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -22,6 +20,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
 
     helper.getAllContacts().then((list) {
+      print(list);
       setState(() {
         contactList = list as List<Contact>;
       });
@@ -36,29 +35,15 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.red,
         centerTitle: true,
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          //  _showContactPage();
-        },
-        backgroundColor: Colors.red,
-        child: Icon(Icons.add),
-      ),
       body: ListView.builder(
         padding: EdgeInsets.all(10),
         itemCount: contactList.length,
         itemBuilder: (context, index) {
-          return ContactCard(contactList[index]);
+          return ContactCard(
+            contact: contactList[index],
+          );
         },
       ),
     );
-  }
-
-  void _showContactPage(Contact contact) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => ContactPage(
-                  contact: contact,
-                )));
   }
 }
