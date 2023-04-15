@@ -1,37 +1,28 @@
 import 'package:flutter/material.dart';
 
 import '../helpers/contact_helper.dart';
+import '../ui/contact_page.dart';
 
-class ContactCard extends StatefulWidget {
-  const ContactCard(Contact contactList, {super.key});
 
-  @override
-  State<ContactCard> createState() => _ContactCardState();
-}
+class ContactCard extends StatelessWidget {
+  const ContactCard({super.key, required this.contact});
 
-class _ContactCardState extends State<ContactCard> {
-  ContactHelper helper = ContactHelper();
-
-  List<Contact> contactList = [];
-
-  @override
-  void initState() {
-    super.initState();
-
-    helper.getAllContacts().then((list) {
-      setState(() {
-        contactList = list as List<Contact>;
-      });
-    });
-  }
-
+  final Contact contact;
+ 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
-  }
-
-  contactCard(BuildContext context, int index) {
-    return GestureDetector(
+    return Container(
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ContactPage(
+                contact: contact,
+              ),
+            ),
+          );
+        },
       child: Card(
         child: Padding(
           padding: EdgeInsets.all(10.0),
@@ -52,16 +43,16 @@ class _ContactCardState extends State<ContactCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      contactList[index].name ?? "",
+                        contact.name ?? "",
                       style: TextStyle(
                           fontSize: 22.0, fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      contactList[index].email ?? "",
+                        contact.email ?? "",
                       style: TextStyle(fontSize: 18.0),
                     ),
                     Text(
-                      contactList[index].phone ?? "",
+                        contact.phone ?? "",
                       style: TextStyle(fontSize: 18.0),
                     )
                   ],
@@ -71,6 +62,7 @@ class _ContactCardState extends State<ContactCard> {
           ),
         ),
       ),
+      ),
     );
-  }
+  }  
 }
