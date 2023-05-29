@@ -15,7 +15,9 @@ class _ContactPageState extends State<ContactPage> {
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
 
-  bool _userEdited = false;
+  final _nameFocus = FocusNode();
+
+  bool userEdited = false;
 
   late Contact _editedContact;
 
@@ -42,7 +44,13 @@ class _ContactPageState extends State<ContactPage> {
         centerTitle: true,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          if (_editedContact.name != null && _editedContact.name!.isNotEmpty) {
+            Navigator.pop(context, _editedContact);
+          } else {
+            FocusScope.of(context).requestFocus(_nameFocus);
+          }
+        },
         backgroundColor: Colors.red,
         child: Icon(Icons.save),
       ),
@@ -65,10 +73,12 @@ class _ContactPageState extends State<ContactPage> {
               height: 10.0,
             ),
             TextField(
+              controller: _nameController,
+              focusNode: _nameFocus,
               decoration:
                   InputDecoration(border: InputBorder.none, labelText: "Nome"),
               onChanged: (text) {
-                _userEdited = true;
+                userEdited = true;
                 setState(() {
                   _editedContact.name = text;
                 });
@@ -78,11 +88,12 @@ class _ContactPageState extends State<ContactPage> {
               height: 10.0,
             ),
             TextField(
+              controller: _emailController,
               keyboardType: TextInputType.emailAddress,
               decoration:
                   InputDecoration(border: InputBorder.none, labelText: "Email"),
               onChanged: (text) {
-                _userEdited = true;
+                userEdited = true;
                 _editedContact.email = text;
               },
             ),
@@ -90,11 +101,12 @@ class _ContactPageState extends State<ContactPage> {
               height: 10.0,
             ),
             TextField(
+              controller: _phoneController,
               keyboardType: TextInputType.phone,
               decoration:
                   InputDecoration(border: InputBorder.none, labelText: "Phone"),
               onChanged: (text) {
-                _userEdited = true;
+                userEdited = true;
                 _editedContact.phone = text;
               },
             ),

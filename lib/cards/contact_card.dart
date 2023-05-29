@@ -3,26 +3,21 @@ import 'package:flutter/material.dart';
 import '../helpers/contact_helper.dart';
 import '../ui/contact_page.dart';
 
-
 class ContactCard extends StatelessWidget {
   const ContactCard({super.key, required this.contact});
 
   final Contact contact;
- 
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: GestureDetector(
-        onTap: () {
-          Navigator.push(
+    return GestureDetector(
+      onTap: () {
+        //showContactPage();
+        Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ContactPage(
-                contact: contact,
-              ),
-            ),
-          );
-        },
+                builder: (context) => ContactPage(contact: contact)));
+      },
       child: Card(
         child: Padding(
           padding: EdgeInsets.all(10.0),
@@ -43,16 +38,16 @@ class ContactCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                        contact.name ?? "",
+                      contact.name ?? "",
                       style: TextStyle(
                           fontSize: 22.0, fontWeight: FontWeight.bold),
                     ),
                     Text(
-                        contact.email ?? "",
+                      contact.email ?? "",
                       style: TextStyle(fontSize: 18.0),
                     ),
                     Text(
-                        contact.phone ?? "",
+                      contact.phone ?? "",
                       style: TextStyle(fontSize: 18.0),
                     )
                   ],
@@ -62,7 +57,6 @@ class ContactCard extends StatelessWidget {
           ),
         ),
       ),
-      ),
     );
-  }  
+  }
 }
