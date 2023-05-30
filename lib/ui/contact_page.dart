@@ -33,13 +33,14 @@ class _ContactPageState extends State<ContactPage> {
       _emailController.text = _editedContact.email!;
       _phoneController.text = _editedContact.phone!;
     }
+    print(_editedContact.name);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.black,
         title: Text(_editedContact.name ?? "Novo Contato"),
         centerTitle: true,
       ),
@@ -51,7 +52,7 @@ class _ContactPageState extends State<ContactPage> {
             FocusScope.of(context).requestFocus(_nameFocus);
           }
         },
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.black,
         child: Icon(Icons.save),
       ),
       body: SingleChildScrollView(

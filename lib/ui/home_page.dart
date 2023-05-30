@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Contatos'),
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.black,
         centerTitle: true,
       ),
       backgroundColor: Colors.white,
@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
         onPressed: () {
           showContactPage(contact: Contact());
         },
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.black,
         child: Icon(Icons.add),
       ),
       body: ListView.builder(
