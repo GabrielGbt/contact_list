@@ -1,3 +1,4 @@
+import 'package:contact_list/ui/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:contact_list/helpers/contact_helper.dart';
 
@@ -55,10 +56,12 @@ class _ContactPageState extends State<ContactPage> {
             _editedContact.email = _emailController.text;
             if (widget.contact != null) {
               ch.updateContact(_editedContact);
-              Navigator.pop(context);
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => HomePage()));
             } else {
               ch.saveContact(_editedContact);
-              Navigator.pop(context);
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => HomePage()));
             }
           }
         },
