@@ -46,10 +46,20 @@ class _ContactPageState extends State<ContactPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          if (_editedContact.name != null && _editedContact.name!.isNotEmpty) {
-            Navigator.pop(context, _editedContact);
+          if (_nameController.text == null || _nameController.text.isEmpty) {
+            Navigator.pop(context);
           } else {
-            FocusScope.of(context).requestFocus(_nameFocus);
+            ContactHelper ch = ContactHelper();
+            _editedContact.name = _nameController.text;
+            _editedContact.phone = _phoneController.text;
+            _editedContact.email = _emailController.text;
+            if (widget.contact != null) {
+              ch.updateContact(_editedContact);
+              Navigator.pop(context);
+            } else {
+              ch.saveContact(_editedContact);
+              Navigator.pop(context);
+            }
           }
         },
         backgroundColor: Colors.black,

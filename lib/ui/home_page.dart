@@ -17,17 +17,9 @@ class _HomePageState extends State<HomePage> {
   List<Contact> contactList = [];
 
   @override
+  //this is to test the database
   void initState() {
     super.initState();
-
-    /* Contact c = Contact();
-    c.name = "nerd";
-    c.email = "nerd@gmail.com";
-    c.phone = "555-444-222";
-    c.img = "";
-
-    helper.saveContact(c); */
-
     _getAllContacts();
   }
 
