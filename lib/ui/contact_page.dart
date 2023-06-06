@@ -34,7 +34,6 @@ class _ContactPageState extends State<ContactPage> {
       _emailController.text = _editedContact.email!;
       _phoneController.text = _editedContact.phone!;
     }
-    print(_editedContact.name);
   }
 
   @override
@@ -46,7 +45,7 @@ class _ContactPageState extends State<ContactPage> {
         centerTitle: true,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
+        onPressed: ()async {
           if (_nameController.text == null || _nameController.text.isEmpty) {
             Navigator.pop(context);
           } else {
@@ -55,13 +54,11 @@ class _ContactPageState extends State<ContactPage> {
             _editedContact.phone = _phoneController.text;
             _editedContact.email = _emailController.text;
             if (widget.contact != null) {
-              ch.updateContact(_editedContact);
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => HomePage()));
+              await ch.updateContact(_editedContact);
+             Navigator.pop(context);
             } else {
-              ch.saveContact(_editedContact);
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => HomePage()));
+              await  ch.saveContact(_editedContact);
+              Navigator.pop(context);
             }
           }
         },
