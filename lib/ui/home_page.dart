@@ -33,8 +33,8 @@ class _HomePageState extends State<HomePage> {
       ),
       backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showContactPage(contact: Contact());
+        onPressed: ()  {
+           showContactPage(contact: Contact());
         },
         backgroundColor: Colors.black,
         child: Icon(Icons.add),
@@ -47,8 +47,13 @@ class _HomePageState extends State<HomePage> {
               padding: EdgeInsets.all(10),
               itemCount: contactList.length,
               itemBuilder: (context, index) {
-                return ContactCard(
-                  contact: contactList[index],
+                return GestureDetector(
+                  onTap: () {
+                    showContactPage(contact: contactList[index]);
+                  },
+                  child: ContactCard(
+                    contact: contactList[index],
+                  ),
                 );
               },
             );
@@ -66,7 +71,7 @@ class _HomePageState extends State<HomePage> {
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ContactPage(),
+        builder: (context) => ContactPage(contact: contact),
       ),
     );
 

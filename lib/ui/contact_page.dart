@@ -30,9 +30,9 @@ class _ContactPageState extends State<ContactPage> {
     } else {
       _editedContact = Contact.fromMap(widget.contact!.toMap());
 
-      _nameController.text = _editedContact.name!;
-      _emailController.text = _editedContact.email!;
-      _phoneController.text = _editedContact.phone!;
+      _nameController.text = _editedContact.name ?? "";
+      _emailController.text = _editedContact.email ?? "";
+      _phoneController.text = _editedContact.phone ?? "";
     }
   }
 
@@ -45,7 +45,7 @@ class _ContactPageState extends State<ContactPage> {
         centerTitle: true,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: ()async {
+        onPressed: () async {
           if (_nameController.text == null || _nameController.text.isEmpty) {
             Navigator.pop(context);
           } else {
@@ -53,11 +53,12 @@ class _ContactPageState extends State<ContactPage> {
             _editedContact.name = _nameController.text;
             _editedContact.phone = _phoneController.text;
             _editedContact.email = _emailController.text;
-            if (widget.contact != null) {
+
+            if (widget.contact?.id != null) {
               await ch.updateContact(_editedContact);
              Navigator.pop(context);
             } else {
-              await  ch.saveContact(_editedContact);
+              await ch.saveContact(_editedContact);
               Navigator.pop(context);
             }
           }
