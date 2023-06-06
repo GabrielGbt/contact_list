@@ -39,13 +39,24 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.black,
         child: Icon(Icons.add),
       ),
-      body: ListView.builder(
-        padding: EdgeInsets.all(10),
-        itemCount: contactList.length,
-        itemBuilder: (context, index) {
-          return ContactCard(
-            contact: contactList[index],
-          );
+      body: FutureBuilder(
+        future: helper.getAllContacts(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+              padding: EdgeInsets.all(10),
+              itemCount: contactList.length,
+              itemBuilder: (context, index) {
+                return ContactCard(
+                  contact: contactList[index],
+                );
+              },
+            );
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
         },
       ),
     );
@@ -53,9 +64,12 @@ class _HomePageState extends State<HomePage> {
 
   void showContactPage({required Contact contact}) async {
     final recContact = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => ContactPage()));
+      context,
+      MaterialPageRoute(
+        builder: (context) => ContactPage(),
+      ),
+    );
     if (recContact != null) {
-      // ignore: unnecessary_null_comparison
       if (contact != null) {
         await helper.updateContact(recContact);
       } else {
@@ -65,11 +79,10 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void _getAllContacts() {
-    helper.getAllContacts().then((list) {
-      setState(() {
-        contactList = list as List<Contact>;
-      });
+  Future _getAllContacts() async {
+    final list = await helper.getAllContacts();
+    setState(() {
+      contactList = list;
     });
   }
 }
